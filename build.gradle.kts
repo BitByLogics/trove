@@ -1,14 +1,11 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
     id("java-library")
     id("maven-publish")
-    id("signing")
     id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
 group = "net.goldenstack.trove"
-version = "3.0"
+version = "4.0"
 
 repositories {
     mavenCentral()
@@ -39,9 +36,9 @@ java {
 }
 
 mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-
-    signAllPublications()
+    repositories {
+        mavenLocal()
+    }
 
     coordinates("net.goldenstack", "trove", version.toString())
 
@@ -68,9 +65,4 @@ mavenPublishing {
             url.set("https://github.com/goldenstack/trove")
         }
     }
-}
-
-signing {
-    useGpgCmd()
-    sign(publishing.publications)
 }
