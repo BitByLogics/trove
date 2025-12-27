@@ -56,8 +56,12 @@ public class Trove {
 
             String keyPath = StreamSupport.stream(directory.relativize(path).spliterator(), false).map(Path::toString).collect(Collectors.joining("/"));
 
-            if (!keyPath.endsWith(FILE_SUFFIX)) continue;
-            keyPath = keyPath.substring(0, keyPath.length() - FILE_SUFFIX.length());
+            int slash = keyPath.lastIndexOf('/');
+            String fileName = (slash == -1) ? keyPath : keyPath.substring(slash + 1);
+
+            if (!fileName.endsWith(FILE_SUFFIX)) continue;
+
+            keyPath = fileName.substring(0, fileName.length() - FILE_SUFFIX.length());
 
             BinaryTag tag;
             try {
