@@ -1,7 +1,11 @@
 package net.goldenstack.loot.util.nbt;
 
 import it.unimi.dsi.fastutil.ints.IntSet;
-import net.kyori.adventure.nbt.*;
+import net.kyori.adventure.nbt.BinaryTag;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
+import net.kyori.adventure.nbt.ListBinaryTag;
+import net.kyori.adventure.nbt.TagStringIO;
+import net.minestom.server.adventure.MinestomAdventure;
 import net.minestom.server.codec.Codec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -469,7 +473,12 @@ class Parser {
 
         String dump = builder.toString();
 
-        Map.Entry<BinaryTag, String> entry = TagStringIOExt.readTagEmbedded(dump);
+        Map.Entry<BinaryTag, String> entry;
+
+        StringBuilder remainder = new StringBuilder();
+        BinaryTag tag = MinestomAdventure.tagStringIO().asTag(dump, remainder);
+
+        entry = Map.entry(tag, remainder.toString());
 
         reader.skip(-count + entry.getValue().length());
         return entry.getKey();

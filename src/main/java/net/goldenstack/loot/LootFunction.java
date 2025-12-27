@@ -6,11 +6,15 @@ import net.goldenstack.loot.util.nbt.NBTReference;
 import net.goldenstack.loot.util.nbt.NBTUtils;
 import net.goldenstack.loot.util.predicate.ItemPredicate;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.nbt.*;
+import net.kyori.adventure.nbt.BinaryTag;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
+import net.kyori.adventure.nbt.ListBinaryTag;
+import net.kyori.adventure.nbt.TagStringIO;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.util.RGBLike;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.ServerFlag;
+import net.minestom.server.adventure.MinestomAdventure;
 import net.minestom.server.codec.Codec;
 import net.minestom.server.codec.Result;
 import net.minestom.server.codec.StructCodec;
@@ -30,6 +34,7 @@ import net.minestom.server.item.book.FilteredText;
 import net.minestom.server.item.component.*;
 import net.minestom.server.item.enchant.Enchantment;
 import net.minestom.server.item.instrument.Instrument;
+import net.minestom.server.network.player.ResolvableProfile;
 import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.potion.PotionType;
 import net.minestom.server.registry.DynamicRegistry;
@@ -614,7 +619,7 @@ public interface LootFunction {
             PlayerSkin skin = player.getSkin();
             if (skin == null) return input;
 
-            return input.with(DataComponents.PROFILE, new HeadProfile(skin));
+            return input.with(DataComponents.PROFILE, new ResolvableProfile(skin));
         }
 
         @Override
@@ -957,7 +962,7 @@ public interface LootFunction {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                }, TagStringIOExt::writeTag), SetCustomData::tag,
+                }, MinestomAdventure.tagStringIO()::asString), SetCustomData::tag,
                 SetCustomData::new
         );
 
