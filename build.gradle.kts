@@ -20,6 +20,7 @@ dependencies {
     val minestom = "net.minestom:minestom:2025.12.20-1.21.11"
 
     compileOnly(minestom)
+    compileOnly("it.unimi.dsi:fastutil:8.5.18")
 
     testImplementation(minestom)
 
