@@ -17,7 +17,7 @@ repositories {
 dependencies {
     api("org.jetbrains:annotations:24.0.1")
 
-    val minestom = "net.minestom:minestom:2025.07.04-1.21.5"
+    val minestom = "net.minestom:minestom:2025.12.20-1.21.11"
 
     compileOnly(minestom)
 
@@ -33,7 +33,7 @@ tasks.test {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 
